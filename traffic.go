@@ -6,10 +6,10 @@ import (
 	"engo.io/engo/common"
 
 	"image/color"
-	"log"
+	"github.com/bennapp/TrafficManager/systems"
 )
 
-type City struct {
+type Snake struct {
 	ecs.BasicEntity
 	common.RenderComponent
 	common.SpaceComponent
@@ -23,7 +23,7 @@ func (*myScene) Type() string { return "myGame" }
 // Preload is called before loading any assets from the disk,
 // to allow you to register / queue them
 func (*myScene) Preload() {
-	engo.Files.Load("textures/city.png")
+	engo.Files.Load("textures/Snake.png")
 }
 
 // Setup is called before the main loop starts. It allows you
@@ -32,37 +32,40 @@ func (*myScene) Preload() {
 func (*myScene) Setup(u engo.Updater) {
 	world, _ := u.(*ecs.World)
 	world.AddSystem(new(common.RenderSystem))
-	city := City{BasicEntity: ecs.NewBasic()}
-	city.SpaceComponent = common.SpaceComponent{
-		Position: engo.Point{10, 10},
-		Width:    303,
-		Height:   641,
-	}
 
-	texture, err := common.LoadedSprite("textures/city.png")
-	if err != nil {
-		log.Println("Unable to load texture: " + err.Error())
-	}
+	world.AddSystem(&systems.SnakeBuildingSystem{})
 
-	city.RenderComponent = common.RenderComponent{
-		Drawable: texture,
-		Scale:    engo.Point{1, 1},
-	}
+	//city := City{BasicEntity: ecs.NewBasic()}
+	//city.SpaceComponent = common.SpaceComponent{
+	//	Position: engo.Point{10, 10},
+	//	Width:    10,
+	//	Height:   10,
+	//}
 
-	for _, system := range world.Systems() {
-		switch sys := system.(type) {
-		case *common.RenderSystem:
-			sys.Add(&city.BasicEntity, &city.RenderComponent, &city.SpaceComponent)
-		}
-	}
+	//texture, err := common.LoadedSprite("textures/Snake.png")
+	//if err != nil {
+	//	log.Println("Unable to load texture: " + err.Error())
+	//}
+
+	//city.RenderComponent = common.RenderComponent{
+	//	Drawable: texture,
+	//	Scale:    engo.Point{1, 1},
+	//}
+
+	//for _, system := range world.Systems() {
+	//	switch sys := system.(type) {
+	//	case *common.RenderSystem:
+	//		sys.Add(&city.BasicEntity, &city.RenderComponent, &city.SpaceComponent)
+	//	}
+	//}
 	common.SetBackground(color.White)
 }
 
 func main() {
 	opts := engo.RunOptions{
 		Title:  "Hello World",
-		Width:  400,
-		Height: 400,
+		Width:  800,
+		Height: 600,
 	}
 	engo.Run(opts, new(myScene))
 }
