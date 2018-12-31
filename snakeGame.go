@@ -35,29 +35,6 @@ func (*myScene) Setup(u engo.Updater) {
 
 	world.AddSystem(&systems.SnakeBuildingSystem{})
 
-	//city := City{BasicEntity: ecs.NewBasic()}
-	//city.SpaceComponent = common.SpaceComponent{
-	//	Position: engo.Point{10, 10},
-	//	Width:    10,
-	//	Height:   10,
-	//}
-
-	//texture, err := common.LoadedSprite("textures/Snake.png")
-	//if err != nil {
-	//	log.Println("Unable to load texture: " + err.Error())
-	//}
-
-	//city.RenderComponent = common.RenderComponent{
-	//	Drawable: texture,
-	//	Scale:    engo.Point{1, 1},
-	//}
-
-	//for _, system := range world.Systems() {
-	//	switch sys := system.(type) {
-	//	case *common.RenderSystem:
-	//		sys.Add(&city.BasicEntity, &city.RenderComponent, &city.SpaceComponent)
-	//	}
-	//}
 	common.SetBackground(color.White)
 }
 
