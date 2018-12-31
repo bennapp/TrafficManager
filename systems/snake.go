@@ -25,6 +25,7 @@ type SnakeBuildingSystem struct {
 
 // New is the initialisation of the System
 func (sb *SnakeBuildingSystem) New(w *ecs.World) {
+	panic("adsf")
 	sb.world = w
 	Spritesheet = common.NewSpritesheetWithBorderFromFile("textures/Snake.png", 16, 16, 1, 1)
 	sb.generateSnake()
